@@ -8,7 +8,12 @@ set nu
 set showmatch 
 set ruler
 set autochdir
-set expandtab 
+" Use spaces instead of tabs
+set expandtab
+
+" Be smart when using tabs
+set smarttab
+
 autocmd BufNewFile * exec ":retab!"
 "autocmd BufWrite,BufRead,BufEnter * exec ":retab!"
 autocmd BufNewFile,BufWrite,BufRead,BufEnter * set expandtab
@@ -22,7 +27,7 @@ set cinoptions={0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s
 set tag=tags;
 set clipboard+=unnamed 
 
-filetype plugin indent on
+plugin indent on
 syntax enable
 
 "Install Vim Plugin bu pathogen
@@ -448,3 +453,95 @@ else
 endif
 
 " vim: set fdl=0 fdm=marker:
+
+""=============================""
+"" Key Mapping Configuration "
+""=============================""
+let mapleader = ","
+let g:mapleader = ","
+
+" Fast saveing
+nmap <leader>w :e#<cr>
+nmap <C-s> <leader>m:w!<cr><C-o>/Sazabi<cr>
+imap <C-s> <Esc><leader>m:w!<cr><C-o>/Sazabi<cr>
+nmap <leader>m :%s/\s*$//g<cr>
+
+" select files in Buffer
+nmap <leader>e :bp<cr>
+nmap <leader>q :bn<cr>
+
+" Fast search
+nmap <Space> /
+
+" Fast close
+nmap <C-w> :q!<cr>
+imap <C-w> <Esc>:q!<cr>
+
+" Fast split
+nmap <leader>v :set columns=306<cr>:vsp<cr>
+nmap <leader>v :call Resize_vsplit()<cr>
+nmap <leader>s :sp<cr>
+
+" Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Useful mappings for managing tabs
+noremap <tab>o :tabnew<cr>
+noremap <tab>e :tabclose<cr>
+noremap <tab>w :tabonly<cr>
+noremap <C-tab> :tabn<cr>
+inoremap <C-tab> <Esc>:tabn<cr>
+noremap <S-tab> :tabp<cr>
+inoremap <S-tab> <Esc>:tabp<cr>
+noremap <leader>1 :tabn 1<cr>
+noremap <leader>2 :tabn 2<cr>
+noremap <leader>3 :tabn 3<cr>
+noremap <leader>4 :tabn 4<cr>
+noremap <leader>5 :tabn 5<cr>
+noremap <leader>6 :tabn 6<cr>
+noremap <leader>7 :tabn 7<cr>
+noremap <leader>8 :tabn 8<cr>
+noremap <leader>9 :tabn 9<cr>
+
+" Map for No ignore case
+nmap <leader>n :set noignorecase<cr>
+nmap <leader>i :set ignorecase<cr>
+
+" Select all
+map <C-A> ggVG
+map! <C-A> <Esc>ggVGY
+vmap <C-c> "+y
+
+" Fast realoading vimrc configs
+noremap <leader>` :e ~/.vimrc<cr>
+
+" normal mode, alt+j,k,h,l adjust win size
+nnoremap <M-j> :resize +5<cr>
+nnoremap <M-k> :resize -5<cr>
+nnoremap <M-h> :vertical resize -5<cr>
+nnoremap <M-l> :vertical resize +5<cr>
+
+" insert mode,  cursor position
+inoremap <M-j> <Down>
+inoremap <M-k> <Up>
+inoremap <M-h> <left>
+inoremap <M-l> <Right>
+
+" Function {{{
+" Remove trailing whitespace when writing a buffer, but not for diff files.
+" From: Vigil
+" @see http://blog.bs2.to/post/EdwardLee/17961
+function! RemoveTrailingWhitespace()
+    if &ft != "diff"
+        let b:curcol = col(".")
+        let b:curline = line(".")
+        silent! %s/\s\+$//
+        silent! %s/\(\s*\n\)\+\%$//
+        call cursor(b:curline, b:curcol)
+    endif
+endfunction
+autocmd BufWritePre * call RemoveTrailingWhitespace()
+" }}}
