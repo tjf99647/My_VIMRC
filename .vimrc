@@ -27,7 +27,7 @@ set cinoptions={0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s
 set tag=tags;
 set clipboard+=unnamed 
 
-plugin indent on
+filetype plugin indent on
 syntax enable
 
 "Install Vim Plugin bu pathogen
@@ -479,14 +479,14 @@ imap <C-w> <Esc>:q!<cr>
 
 " Fast split
 nmap <leader>v :set columns=306<cr>:vsp<cr>
-nmap <leader>v :call Resize_vsplit()<cr>
+"nmap <leader>v :call Resize_vsplit()<cr>
 nmap <leader>s :sp<cr>
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+noremap <C-j> <C-W>j
+noremap <C-k> <C-W>k
+noremap <C-h> <C-W>h
+noremap <C-l> <C-W>l
 
 " Useful mappings for managing tabs
 noremap <tab>o :tabnew<cr>
